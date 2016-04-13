@@ -1,5 +1,6 @@
+from AIMA.utils import *
+
 import Heuristics
-from utils import *
 
 
 #______________________________________________________________________________

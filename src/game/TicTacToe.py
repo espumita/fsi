@@ -1,5 +1,6 @@
-from Game import Game
-from utils import update, Struct, if_
+from AIMA.utils import update, Struct, if_
+
+from game.Game import Game
 
 
 class TicTacToe(Game):

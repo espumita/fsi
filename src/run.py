@@ -1,5 +1,5 @@
-import games
-from ConnectFour import ConnectFour
+from game import games
+from game.ConnectFour import ConnectFour
 
 game = ConnectFour()
 
