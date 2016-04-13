@@ -2,8 +2,11 @@
 
 """
 
+import random
+
+import heuristica
 from utils import *
-import random 
+
 
 #______________________________________________________________________________
 # Minimax Search
@@ -71,7 +74,7 @@ def alphabeta_full_search(state, game):
                            lambda ((a, s)): min_value(s, -infinity, infinity))
     return action
 
-def alphabeta_search(state, game, d=4, cutoff_test=None, eval_fn=None):
+def alphabeta_search(state, game, d=4, cutoff_test=None, eval_fn=heuristica.heuristicaAleatorio):
     """Search game to determine best action; use alpha-beta pruning.
     This version cuts off search and uses an evaluation function."""
 
@@ -228,10 +231,13 @@ class TicTacToe(Game):
 
     def display(self, state):
         board = state.board
-        for x in range(1, self.h+1):
-            for y in range(1, self.v+1):
+        for y in range(self.v, 0, -1):
+            for x in range(1, self.h+1):
                 print board.get((x, y), '.'),
             print
+        print "-------------------"
+        for n in range(1, self.h+1):
+            print n,
 
     def compute_utility(self, board, move, player):
         "If X wins with this move, return 1; if O return -1; else return 0."
