@@ -1,5 +1,6 @@
 from game import games
 from game.ConnectFour import ConnectFour
+from game.Heuristics import randomHeuristics
 
 game = ConnectFour()
 
@@ -25,10 +26,7 @@ while True:
         player = 'X'
     else:
         print "Thinking..."
-        #move = games.minimax_decision(state, game)
-        #move = games.alphabeta_full_search(state, game)
-        move = games.alphabeta_search(state, game)
-
+        move = games.alphabeta_search(state, game,4,None,randomHeuristics)
         state = game.make_move(move, state)
         player = 'O'
     print "-------------------"
