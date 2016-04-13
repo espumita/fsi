@@ -1,7 +1,7 @@
 import games
+from ConnectFour import ConnectFour
 
-#game = games.TicTacToe(h=3,v=3,k=3)
-game = games.ConnectFour()
+game = ConnectFour()
 
 state = game.initial
 

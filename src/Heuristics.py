@@ -1,4 +1,4 @@
 from random import randint
 
-def heuristicaAleatorio(state):
+def randomHeuristics(state):
     return randint(0,100)
