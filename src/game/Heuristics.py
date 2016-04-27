@@ -20,18 +20,38 @@ def checkVerticalConnection(state, key):
 def checkHorizontalConnection(state, key):
     accumulatedValue = 0
     if state.board.get((key[0], key[1])) == state.to_move:
-        if state.board.get((key[0]-1, key[1])) == state.to_move or state.board.get((key[0]+1, key[1])) == state.to_move:
+        if state.board.get((key[0]-1, key[1])) == state.to_move:
             accumulatedValue += 5
-            if state.board.get((key[0]-2, key[1])) == state.to_move or state.board.get((key[0]+2, key[1])) == state.to_move:
+            if state.board.get((key[0]-2, key[1])) == state.to_move:
                 accumulatedValue += 10
-                if state.board.get((key[0]-3, key[1])) == state.to_move or state.board.get((key[0]+3, key[1])) == state.to_move:
+                if state.board.get((key[0]-3, key[1])) == state.to_move:
+                    return float('inf')
+        if state.board.get((key[0]+1, key[1])) == state.to_move:
+            if accumulatedValue >= 10:
+                return float('inf')
+            accumulatedValue += 5
+        if state.board.get((key[0]+2, key[1])) == state.to_move:
+                if accumulatedValue > 5:
+                    return float('inf')
+                accumulatedValue += 10
+                if state.board.get((key[0]+3, key[1])) == state.to_move:
                     return float('inf')
     if state.board.get((key[0], key[1])) == "O":
-        if state.board.get((key[0]-1, key[1])) == "O" or state.board.get((key[0]+1, key[1])) == "O":
+        if state.board.get((key[0]-1, key[1])) == "O":
             accumulatedValue -= 5
-            if state.board.get((key[0]-2, key[1])) == "O" or state.board.get((key[0]+2, key[1])) == "O":
+            if state.board.get((key[0]-2, key[1])) == "O":
                 accumulatedValue -= 10
-                if state.board.get((key[0]-3, key[1])) == "O" or state.board.get((key[0]+3, key[1])) == "O":
+                if state.board.get((key[0]-3, key[1])) == "O":
+                    return -float('inf')
+        if state.board.get((key[0]+1, key[1])) == "O":
+            if accumulatedValue <= -10:
+                return -float('inf')
+            accumulatedValue -= 5
+            if state.board.get((key[0]+2, key[1])) == "O":
+                if accumulatedValue < -5:
+                    return -float('inf')
+                accumulatedValue -= 10
+                if state.board.get((key[0]+3, key[1])) == "O":
                     return -float('inf')
     return accumulatedValue
 
