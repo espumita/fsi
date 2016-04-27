@@ -1,58 +1,54 @@
 def checkVerticalConnection(state, key):
     accumulatedValue = 0
-    if state.board.get((key[0], key[1])) == state.to_move:
-        if state.board.get((key[0], key[1]+1)) == state.to_move:
+    if state.board.get((key[0], key[1])) == "X":
+        if state.board.get((key[0], key[1]+1)) == "X":
             accumulatedValue += 5
-            if state.board.get((key[0], key[1]+2)) == state.to_move:
+            if state.board.get((key[0], key[1]+2)) == "X":
                 accumulatedValue += 10
-                if state.board.get((key[0], key[1]+3)) == state.to_move:
+                if state.board.get((key[0], key[1]+3)) == "X":
                     return float('inf')
-    if state.board.get((key[0], key[1])) == "O":
+                else:
+                    accumulatedValue = 0
+            else:
+                accumulatedValue = 0
+    else:
         if state.board.get((key[0], key[1]+1)) == "O":
             accumulatedValue -= 5
             if state.board.get((key[0], key[1]+2)) == "O":
                 accumulatedValue -= 10
                 if state.board.get((key[0], key[1]+3)) == "O":
                     return -float('inf')
+                else:
+                    accumulatedValue = 0
+            else:
+                accumulatedValue = 0
     return accumulatedValue
 
 
 def checkHorizontalConnection(state, key):
     accumulatedValue = 0
-    if state.board.get((key[0], key[1])) == state.to_move:
-        if state.board.get((key[0]-1, key[1])) == state.to_move:
+    if state.board.get((key[0], key[1])) == "X":
+        if state.board.get((key[0]+1, key[1])) == "X":
             accumulatedValue += 5
-            if state.board.get((key[0]-2, key[1])) == state.to_move:
+            if state.board.get((key[0]+2, key[1])) == "X":
                 accumulatedValue += 10
-                if state.board.get((key[0]-3, key[1])) == state.to_move:
+                if state.board.get((key[0]+3, key[1])) == "X":
                     return float('inf')
-        if state.board.get((key[0]+1, key[1])) == state.to_move:
-            if accumulatedValue >= 10:
-                return float('inf')
-            accumulatedValue += 5
-        if state.board.get((key[0]+2, key[1])) == state.to_move:
-                if accumulatedValue > 5:
-                    return float('inf')
-                accumulatedValue += 10
-                if state.board.get((key[0]+3, key[1])) == state.to_move:
-                    return float('inf')
-    if state.board.get((key[0], key[1])) == "O":
-        if state.board.get((key[0]-1, key[1])) == "O":
-            accumulatedValue -= 5
-            if state.board.get((key[0]-2, key[1])) == "O":
-                accumulatedValue -= 10
-                if state.board.get((key[0]-3, key[1])) == "O":
-                    return -float('inf')
+                else:
+                    accumulatedValue = 0
+            else:
+                accumulatedValue = 0
+    else:
         if state.board.get((key[0]+1, key[1])) == "O":
-            if accumulatedValue <= -10:
-                return -float('inf')
             accumulatedValue -= 5
             if state.board.get((key[0]+2, key[1])) == "O":
-                if accumulatedValue < -5:
-                    return -float('inf')
                 accumulatedValue -= 10
                 if state.board.get((key[0]+3, key[1])) == "O":
                     return -float('inf')
+                else:
+                    accumulatedValue = 0
+            else:
+                accumulatedValue = 0
     return accumulatedValue
 
 
