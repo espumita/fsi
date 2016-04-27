@@ -8,9 +8,9 @@ def checkVerticalConnection(state, key):
                 if state.board.get((key[0], key[1]+3)) == "X":
                     return float('inf')
                 else:
-                    accumulatedValue = 0
+                    accumulatedValue = 4
             else:
-                accumulatedValue = 0
+                accumulatedValue = 14
     else:
         if state.board.get((key[0], key[1]+1)) == "O":
             accumulatedValue -= 5
@@ -19,9 +19,9 @@ def checkVerticalConnection(state, key):
                 if state.board.get((key[0], key[1]+3)) == "O":
                     return -float('inf')
                 else:
-                    accumulatedValue = 0
+                    accumulatedValue = 4
             else:
-                accumulatedValue = 0
+                accumulatedValue = 14
     return accumulatedValue
 
 
@@ -35,9 +35,9 @@ def checkHorizontalConnection(state, key):
                 if state.board.get((key[0]+3, key[1])) == "X":
                     return float('inf')
                 else:
-                    accumulatedValue = 0
+                    accumulatedValue = 4
             else:
-                accumulatedValue = 0
+                accumulatedValue = 14
     else:
         if state.board.get((key[0]+1, key[1])) == "O":
             accumulatedValue -= 5
@@ -46,9 +46,9 @@ def checkHorizontalConnection(state, key):
                 if state.board.get((key[0]+3, key[1])) == "O":
                     return -float('inf')
                 else:
-                    accumulatedValue = 0
+                    accumulatedValue = 4
             else:
-                accumulatedValue = 0
+                accumulatedValue = 14
     return accumulatedValue
 
 
