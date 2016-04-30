@@ -98,20 +98,20 @@ def checkDownwardDiagonal(state, key, problemPlayer, otherPlayer):
     return 0
 
 
-def firstHeuristics(state, problemPlayer):
-    heuristicsValue = 0
+def heuristic(state, problemPlayer):
+    heuristicValue = 0
     otherPlayer = "O" if problemPlayer == "X" else "X"
     for key in state.board:
-        heuristicsValue += checkVerticalConnection(state, key, problemPlayer, otherPlayer)
-        if heuristicsValue == -float('inf') or heuristicsValue == float('inf'):
-            return heuristicsValue
-        #heuristicsValue += checkHorizontalConnection(state, key, problemPlayer, otherPlayer)
-        if heuristicsValue == -float('inf') or heuristicsValue == float('inf'):
-            return heuristicsValue
+        heuristicValue += checkVerticalConnection(state, key, problemPlayer, otherPlayer)
+        if heuristicValue == -float('inf') or heuristicValue == float('inf'):
+            return heuristicValue
+        # heuristicsValue += checkHorizontalConnection(state, key, problemPlayer, otherPlayer)
+        if heuristicValue == -float('inf') or heuristicValue == float('inf'):
+            return heuristicValue
         # heuristicsValue += checkDownwardDiagonal(state, key, problemPLayer, otherPlayer)
-        if heuristicsValue == -float('inf') or heuristicsValue == float('inf'):
-            return heuristicsValue
+        if heuristicValue == -float('inf') or heuristicValue == float('inf'):
+            return heuristicValue
         # heuristicsValue += checkUpwardsDiagonal(state, key, problemPLayer, otherPlayer)
-        if heuristicsValue == -float('inf') or heuristicsValue == float('inf'):
-            return heuristicsValue
-    return heuristicsValue
+        if heuristicValue == -float('inf') or heuristicValue == float('inf'):
+            return heuristicValue
+    return heuristicValue
