@@ -16,6 +16,8 @@ def checkVerticalConnection(state, key, problemPlayer, otherPlayer):
                     return 25 if exists(state, key, 0, 3) else 0
             else:
                 return 5 if exists(state, key, 0, 2) else 0
+        else:
+            return 1
     else:
         if player(state, key, 0, 1) == otherPlayer:
             if player(state, key, 0, 2) == otherPlayer:
@@ -25,6 +27,8 @@ def checkVerticalConnection(state, key, problemPlayer, otherPlayer):
                     return -25 if exists(state, key, 0, 3) else 0
             else:
                 return -5 if exists(state, key, 0, 2) else 0
+        else:
+            return -1
     return 0
 
 
@@ -101,7 +105,7 @@ def firstHeuristics(state, problemPlayer):
         heuristicsValue += checkVerticalConnection(state, key, problemPlayer, otherPlayer)
         if heuristicsValue == -float('inf') or heuristicsValue == float('inf'):
             return heuristicsValue
-        heuristicsValue += checkHorizontalConnection(state, key, problemPlayer, otherPlayer)
+        #heuristicsValue += checkHorizontalConnection(state, key, problemPlayer, otherPlayer)
         if heuristicsValue == -float('inf') or heuristicsValue == float('inf'):
             return heuristicsValue
         # heuristicsValue += checkDownwardDiagonal(state, key, problemPLayer, otherPlayer)
