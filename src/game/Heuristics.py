@@ -1,164 +1,113 @@
-def checkVerticalConnection(state, key, problemPLayer, other):
-    if state.board.get((key[0], key[1])) == problemPLayer:
-        if state.board.get((key[0], key[1]+1)) == problemPLayer:
-            if state.board.get((key[0], key[1]+2)) == problemPLayer:
-                if state.board.get((key[0], key[1]+3)) == problemPLayer:
-                    return float('inf')
-                else:
-                    if (key[0],key[1]+3) in state.moves:
-                        return 25
-                    else:
-                        return 0
-            else:
-                if (key[0],key[1]+2) in state.moves:
-                    return 5
-                else:
-                    return 0
-    else:
-        if state.board.get((key[0], key[1]+1)) == other:
-            if state.board.get((key[0], key[1]+2)) == other:
-                if state.board.get((key[0], key[1]+3)) == other:
-                    return -float('inf')
-                else:
-                    if (key[0],key[1]+3) in state.moves:
-                        return -25
-                    else:
-                        return 0
-            else:
-                if (key[0],key[1]+2) in state.moves:
-                    return -5
-                else:
-                    return 0
-    return 0
+def player(state, key, OffsetX=0, OffsetY=0):
+    return state.board.get((key[0] + OffsetX, key[1] + OffsetY))
 
-def checkHorizontalConnection(state, key, problemPLayer, other):
-    if state.board.get((key[0], key[1])) == problemPLayer:
-        if state.board.get((key[0]+1, key[1])) == problemPLayer:
-            if state.board.get((key[0]+2, key[1])) == problemPLayer:
-                if state.board.get((key[0]+3, key[1])) == problemPLayer:
+
+def exists(state, key, OffsetX=0, OffsetY=0):
+    return (key[0] + OffsetX, key[1] + OffsetY) in state.moves
+
+
+def checkVerticalConnection(state, key, problemPlayer, otherPlayer):
+    if player(state, key) == problemPlayer:
+        if player(state, key, 0, 1) == problemPlayer:
+            if player(state, key, 0, 2) == problemPlayer:
+                if player(state, key, 0, 3) == problemPlayer:
                     return float('inf')
                 else:
-                    if (key[0]+3,key[1]) in state.moves:
-                        return 30
-                    else:
-                        return 0
+                    return 25 if exists(state, key, 0, 3) else 0
             else:
-                if (key[0]+2,key[1]) in state.moves:
-                    return 8
-                else:
-                    return 0
+                return 5 if exists(state, key, 0, 2) else 0
     else:
-        if state.board.get((key[0]+1, key[1])) == other:
-            if state.board.get((key[0]+2, key[1])) == other:
-                if state.board.get((key[0]+3, key[1])) == other:
+        if player(state, key, 0, 1) == otherPlayer:
+            if player(state, key, 0, 2) == otherPlayer:
+                if player(state, key, 0, 3) == otherPlayer:
                     return -float('inf')
                 else:
-                    if (key[0]+3,key[1]) in state.moves:
-                        return -30
-                    else:
-                        return 0
+                    return -25 if exists(state, key, 0, 3) else 0
             else:
-                if (key[0]+2,key[1]) in state.moves:
-                    return -8
-                else:
-                    return 0
+                return -5 if exists(state, key, 0, 2) else 0
     return 0
 
 
-def checkUpwardsDiagonal(state, key):
-    if state.board.get((key[0], key[1])) == "X":
-        if state.board.get((key[0]+1, key[1]+1)) == "X":
-            if state.board.get((key[0]+2, key[1]+2)) == "X":
-                if state.board.get((key[0]+3, key[1]+3)) == "X":
+def checkHorizontalConnection(state, key, problemPlayer, otherPlayer):
+    if player(state, key) == problemPlayer:
+        if player(state, key, 1) == problemPlayer:
+            if player(state, key, 2) == problemPlayer:
+                if player(state, key, 3) == problemPlayer:
                     return float('inf')
                 else:
-                    if (key[0]+3,key[1]+3) in state.moves:
-                        return 45
-                    else:
-                        return 0
+                    return 30 if exists(state, key, 3) else 0
             else:
-                if (key[0]+2,key[1]+2) in state.moves:
-                    return 12
-                else:
-                    return 0
+                return 8 if exists(state, key, 2) else 0
     else:
-        if state.board.get((key[0]+1, key[1]+1)) == "O":
-            if state.board.get((key[0]+2, key[1]+2)) == "O":
-                if state.board.get((key[0]+3, key[1]+3)) == "O":
+        if player(state, key, 1) == otherPlayer:
+            if player(state, key, 2) == otherPlayer:
+                if player(state, key, 3) == otherPlayer:
                     return -float('inf')
                 else:
-                    if (key[0]+3,key[1]+3) in state.moves:
-                        return -45
-                    else:
-                        return 0
+                    return -30 if exists(state, key, 3) else 0
             else:
-                if (key[0]+2,key[1]+2) in state.moves:
-                    return -12
-                else:
-                    return 0
+                return -8 if exists(state, key, 2) else 0
     return 0
 
 
-def checkDownwardDiagonal(state, key):
-    if state.board.get((key[0], key[1])) == "X":
-        if state.board.get((key[0]+1, key[1]-1)) == "X":
-            if state.board.get((key[0]+2, key[1]-2)) == "X":
-                if state.board.get((key[0]+3, key[1]-3)) == "X":
+def checkUpwardsDiagonal(state, key, problemPlayer, otherPlayer):
+    if player(state, key) == problemPlayer:
+        if player(state, key, 1, 1) == problemPlayer:
+            if player(state, key, 2, 2) == problemPlayer:
+                if player(state, key, 3, 3) == problemPlayer:
                     return float('inf')
                 else:
-                    if (key[0]+3,key[1]-3) in state.moves:
-                        return 45
-                    else:
-                        return 0
+                    return 35 if exists(state, key, 3, 3)else 0
             else:
-                if (key[0]+2,key[1]-2) in state.moves:
-                    return 12
-                else:
-                    return 0
+                return 12 if exists(state, key, 2, 2) else 0
     else:
-        if state.board.get((key[0]+1, key[1]-1)) == "O":
-            if state.board.get((key[0]+2, key[1]-2)) == "O":
-                if state.board.get((key[0]+3, key[1]-3)) == "O":
+        if player(state, key, 1, 1) == otherPlayer:
+            if player(state, key, 2, 2) == otherPlayer:
+                if player(state, key, 3, 3) == otherPlayer:
                     return -float('inf')
                 else:
-                    if (key[0]+3,key[1]-3) in state.moves:
-                        return -45
-                    else:
-                        return 0
+                    return -35 if exists(state, key, 3, 3) else 0
             else:
-                if (key[0]+2,key[1]-2) in state.moves:
-                    return -12
-                else:
-                    return 0
+                return -12 if exists(state, key, 2, 2) else 0
     return 0
 
-def firstHeuristics(state, problemPLayer):
-    if problemPLayer == "X":
-        other = "O"
+
+def checkDownwardDiagonal(state, key, problemPlayer, otherPlayer):
+    if player(state, key) == problemPlayer:
+        if player(state, key, 1, -1) == problemPlayer:
+            if player(state, key, 2, -2) == problemPlayer:
+                if player(state, key, 3, -3) == problemPlayer:
+                    return float('inf')
+                else:
+                    return 35 if exists(state, key, 3, -3) else 0
+            else:
+                return 12 if exists(state, key, 2, -2) else 0
     else:
-        other = "X"
+        if player(state, key, 1, -1) == otherPlayer:
+            if player(state, key, 2, -2) == otherPlayer:
+                if player(state, key, 3, -3) == otherPlayer:
+                    return -float('inf')
+                else:
+                    return -35 if exists(state, key, 3, -3) else 0
+            else:
+                return -12 if exists(state, key, 2, -2) else 0
+    return 0
+
+
+def firstHeuristics(state, problemPlayer):
     heuristicsValue = 0
+    otherPlayer = "O" if problemPlayer == "X" else "X"
     for key in state.board:
-        heuristicsValue += checkVerticalConnection(state, key, problemPLayer, other)
-        if heuristicsValue == -float('inf'):
-            return -float('inf')
-        if heuristicsValue == float('inf'):
-            return float('inf')
-        heuristicsValue += checkHorizontalConnection(state, key, problemPLayer, other)
-        if heuristicsValue == -float('inf'):
-            return -float('inf')
-        if heuristicsValue == float('inf'):
-            return float('inf')
-        #heuristicsValue += checkUpwardsDiagonal(state, key)
-        if heuristicsValue == -float('inf'):
-            return -float('inf')
-        if heuristicsValue == float('inf'):
-            return float('inf')
-        #heuristicsValue += checkDownwardDiagonal(state, key)
-        if heuristicsValue == -float('inf'):
-            return -float('inf')
-        if heuristicsValue == float('inf'):
-            return float('inf')
+        heuristicsValue += checkVerticalConnection(state, key, problemPlayer, otherPlayer)
+        if heuristicsValue == -float('inf') or heuristicsValue == float('inf'):
+            return heuristicsValue
+        heuristicsValue += checkHorizontalConnection(state, key, problemPlayer, otherPlayer)
+        if heuristicsValue == -float('inf') or heuristicsValue == float('inf'):
+            return heuristicsValue
+        # heuristicsValue += checkDownwardDiagonal(state, key, problemPLayer, otherPlayer)
+        if heuristicsValue == -float('inf') or heuristicsValue == float('inf'):
+            return heuristicsValue
+        # heuristicsValue += checkUpwardsDiagonal(state, key, problemPLayer, otherPlayer)
+        if heuristicsValue == -float('inf') or heuristicsValue == float('inf'):
+            return heuristicsValue
     return heuristicsValue
-
-
