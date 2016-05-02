@@ -1,3 +1,5 @@
+from game.heuristics.VerticalHeuristic import VerticalHeuristic
+
 
 def player(state, key, OffsetX=0, OffsetY=0):
     return state.board.get((key[0] + OffsetX, key[1] + OffsetY))
@@ -73,11 +75,23 @@ def checkDownwardDiagonal(state, key, problemPlayer, otherPlayer):
     return 0
 
 
+def checkProblemHorizontalTwoConnectionExistence(state, key, problemPlayer):
+    return 0
+
+
+def checkOtherHorizontalTwoConnectionExistence(state, key, otherPlayer):
+    return 0
+
+
 def heuristic(state, problemPlayer):
     heuristicValue = 0
     otherPlayer = "O" if problemPlayer == "X" else "X"
     for key in state.board:
-        heuristicValue += checkProblemVerticalTwoConnectionExistence(state, key, problemPlayer) if player(state, key) == problemPlayer else checkOtherVerticalTwoConnectionExistence(state, key, otherPlayer)
+        heuristicValue += VerticalHeuristic(state, problemPlayer, otherPlayer).heuristicIn(key)
+        if heuristicValue == -float('inf') or heuristicValue == float('inf'):
+            return heuristicValue
+        heuristicValue += checkProblemHorizontalTwoConnectionExistence(state, key, problemPlayer) if player(state, key) == problemPlayer else checkOtherHorizontalTwoConnectionExistence(state, key, otherPlayer)
+
     return heuristicValue
 
         #heuristicValue += checkVerticalConnection(state, key, problemPlayer, otherPlayer)
@@ -93,55 +107,3 @@ def heuristic(state, problemPlayer):
         #if heuristicValue == -float('inf') or heuristicValue == float('inf'):
             #return heuristicValue
 
-
-def checkProblemVerticalTwoConnectionExistence(state, key, problemPlayer):
-    return 1 if exists(state, key, 0, 1) else checkProblemVerticalTwoConnection(key, problemPlayer, state)
-
-
-def checkProblemVerticalTwoConnection(key, problemPlayer, state):
-    return checkProblemVerticalThreeConnectionExistence(state, key, problemPlayer) if player(state, key, 0, 1) == problemPlayer else 0
-
-
-def checkProblemVerticalThreeConnectionExistence(state, key, problemPlayer):
-    return 5 if exists(state, key, 0, 2) else checkProblemVerticalThreeConnection(state, key, problemPlayer)
-
-
-def checkProblemVerticalThreeConnection(state, key, problemPlayer):
-    return checkProblemVerticalFourConnectionExistence(state, key, problemPlayer) if player(state, key, 0, 2) == problemPlayer else 0
-
-
-def checkProblemVerticalFourConnectionExistence(state, key, problemPlayer):
-    return 25 if exists(state, key, 0, 3) else checkProblemVerticalFourConnection(state, key, problemPlayer)
-
-
-def checkProblemVerticalFourConnection(state, key, problemPlayer):
-    return float('inf') if player(state, key, 0, 3) == problemPlayer else 0
-
-
-
-
-
-
-
-def checkOtherVerticalTwoConnectionExistence(state, key, otherPlayer):
-    return -1 if exists(state, key, 0, 1) else checkOtherVerticalTwoConnection(state, key, otherPlayer)
-
-
-def checkOtherVerticalTwoConnection(state, key, otherPlayer):
-    return checkOtherVerticalThreeConnectionExistence(state, key, otherPlayer) if player(state, key, 0, 1) == otherPlayer else 0
-
-
-def checkOtherVerticalThreeConnectionExistence(state, key, otherPlayer):
-    return -5 if exists(state, key, 0, 2) else checkOtherVerticalThreeConnection(state, key, otherPlayer)
-
-
-def checkOtherVerticalThreeConnection(state, key, otherPlayer):
-    return checkOtherVerticalFourConnectionExistence(state, key, otherPlayer) if player(state, key, 0, 2) == otherPlayer else 0
-
-
-def checkOtherVerticalFourConnectionExistence(state, key, otherPlayer):
-    return -25 if exists(state, key, 0, 3) else checkOtherVerticalFourConnection(state, key, otherPlayer)
-
-
-def checkOtherVerticalFourConnection(state, key, otherPlayer):
-    return -float('inf') if player(state, key, 0, 3) == otherPlayer else 0

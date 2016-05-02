@@ -1,6 +1,7 @@
 from game import games
 from game.ConnectFour import ConnectFour
 from game.Heuristic import heuristic
+
 player = 'X'
 problemPLayer = player
 
