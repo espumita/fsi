@@ -76,14 +76,6 @@ def checkDownwardDiagonal(state, key, problemPlayer, otherPlayer):
     return 0
 
 
-def checkProblemHorizontalTwoConnectionExistence(state, key, problemPlayer):
-    return 0
-
-
-def checkOtherHorizontalTwoConnectionExistence(state, key, otherPlayer):
-    return 0
-
-
 def heuristic(state, problemPlayer):
     heuristicValue = 0
     otherPlayer = "O" if problemPlayer == "X" else "X"
@@ -92,15 +84,10 @@ def heuristic(state, problemPlayer):
         if heuristicValue == -float('inf') or heuristicValue == float('inf'):
             return heuristicValue
         heuristicValue += HorizontalHeuristic(state, problemPlayer, otherPlayer).heuristicIn(key)
-
+        if heuristicValue == -float('inf') or heuristicValue == float('inf'):
+            return heuristicValue
     return heuristicValue
 
-        #heuristicValue += checkVerticalConnection(state, key, problemPlayer, otherPlayer)
-        #if heuristicValue == -float('inf') or heuristicValue == float('inf'):
-            #return heuristicValue
-        # heuristicsValue += checkHorizontalConnection(state, key, problemPlayer, otherPlayer)
-        #if heuristicValue == -float('inf') or heuristicValue == float('inf'):
-            #return heuristicValue
         # heuristicsValue += checkDownwardDiagonal(state, key, problemPLayer, otherPlayer)
         #if heuristicValue == -float('inf') or heuristicValue == float('inf'):
             #return heuristicValue
