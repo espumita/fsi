@@ -4,7 +4,7 @@ from game.ConnectFour import ConnectFour
 from game.Heuristic import heuristic
 
 
-class _Heuristic(unittest.TestCase):
+class _VerticalHeuristic(unittest.TestCase):
 
     @classmethod
     def setUp(cls):
@@ -77,3 +77,57 @@ class _Heuristic(unittest.TestCase):
         self.state.moves.remove((4, 3))
         self.state.moves.remove((4, 4))
         self.assertEqual(heuristic(self.state, self.problemPlayer), -float('inf'))
+
+    def test_when_you_block_a_single_vertical_connection_heuristic_should_be_1(self):
+        self.state.board.setdefault((4, 1), 'O')
+        self.state.board.setdefault((4, 2), 'X')
+        self.state.moves.remove((4, 1))
+        self.state.moves.remove((4, 2))
+        self.assertEqual(heuristic(self.state, self.problemPlayer), 1)
+
+    def test_when_you_get_blocked_in_a_single_vertical_connection_heuristic_should_be_minus_1(self):
+        self.state.board.setdefault((4, 1), 'X')
+        self.state.board.setdefault((4, 2), 'O')
+        self.state.moves.remove((4, 1))
+        self.state.moves.remove((4, 2))
+        self.assertEqual(heuristic(self.state, self.problemPlayer), -1)
+
+    def test_when_you_block_a_two_vertical_connection_heuristic_should_be_1(self):
+        self.state.board.setdefault((4, 1), 'O')
+        self.state.board.setdefault((4, 2), 'O')
+        self.state.board.setdefault((4, 3), 'X')
+        self.state.moves.remove((4, 1))
+        self.state.moves.remove((4, 2))
+        self.state.moves.remove((4, 3))
+        self.assertEqual(heuristic(self.state, self.problemPlayer), 1)
+
+    def test_when_you_get_blocked_in_a_two_vertical_connection_heuristic_should_be_minus_1(self):
+        self.state.board.setdefault((4, 1), 'X')
+        self.state.board.setdefault((4, 2), 'X')
+        self.state.board.setdefault((4, 3), 'O')
+        self.state.moves.remove((4, 1))
+        self.state.moves.remove((4, 2))
+        self.state.moves.remove((4, 3))
+        self.assertEqual(heuristic(self.state, self.problemPlayer), -1)
+
+    def test_when_you_block_a_three_vertical_connection_heuristic_should_be_1(self):
+        self.state.board.setdefault((4, 1), 'O')
+        self.state.board.setdefault((4, 2), 'O')
+        self.state.board.setdefault((4, 3), 'O')
+        self.state.board.setdefault((4, 4), 'X')
+        self.state.moves.remove((4, 1))
+        self.state.moves.remove((4, 2))
+        self.state.moves.remove((4, 3))
+        self.state.moves.remove((4, 4))
+        self.assertEqual(heuristic(self.state, self.problemPlayer), 1)
+
+    def test_when_you_get_blocked_in_a_three_vertical_connection_heuristic_should_be_minus_1(self):
+        self.state.board.setdefault((4, 1), 'X')
+        self.state.board.setdefault((4, 2), 'X')
+        self.state.board.setdefault((4, 3), 'X')
+        self.state.board.setdefault((4, 4), 'O')
+        self.state.moves.remove((4, 1))
+        self.state.moves.remove((4, 2))
+        self.state.moves.remove((4, 3))
+        self.state.moves.remove((4, 4))
+        self.assertEqual(heuristic(self.state, self.problemPlayer), -1)
