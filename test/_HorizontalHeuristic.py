@@ -1,7 +1,6 @@
-import unittest
-
 from game.ConnectFour import ConnectFour
 from game.heuristics.HorizontalHeuristic import HorizontalHeuristic
+import unittest
 
 
 class _HorizontalHeuristic(unittest.TestCase):

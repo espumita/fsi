@@ -10,28 +10,6 @@ def exists(state, key, OffsetX=0, OffsetY=0):
     return (key[0] + OffsetX, key[1] + OffsetY) in state.moves
 
 
-def checkHorizontalConnection(state, key, problemPlayer, otherPlayer):
-    if player(state, key) == problemPlayer:
-        if player(state, key, 1) == problemPlayer:
-            if player(state, key, 2) == problemPlayer:
-                if player(state, key, 3) == problemPlayer:
-                    return float('inf')
-                else:
-                    return 30 if exists(state, key, 3) else 0
-            else:
-                return 8 if exists(state, key, 2) else 0
-    else:
-        if player(state, key, 1) == otherPlayer:
-            if player(state, key, 2) == otherPlayer:
-                if player(state, key, 3) == otherPlayer:
-                    return -float('inf')
-                else:
-                    return -30 if exists(state, key, 3) else 0
-            else:
-                return -8 if exists(state, key, 2) else 0
-    return 0
-
-
 def checkUpwardsDiagonal(state, key, problemPlayer, otherPlayer):
     if player(state, key) == problemPlayer:
         if player(state, key, 1, 1) == problemPlayer:
