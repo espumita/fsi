@@ -1,35 +1,10 @@
+
 def player(state, key, OffsetX=0, OffsetY=0):
     return state.board.get((key[0] + OffsetX, key[1] + OffsetY))
 
 
 def exists(state, key, OffsetX=0, OffsetY=0):
     return (key[0] + OffsetX, key[1] + OffsetY) in state.moves
-
-
-def checkVerticalConnection(state, key, problemPlayer, otherPlayer):
-    if player(state, key) == problemPlayer:
-        if player(state, key, 0, 1) == problemPlayer:
-            if player(state, key, 0, 2) == problemPlayer:
-                if player(state, key, 0, 3) == problemPlayer:
-                    return float('inf')
-                else:
-                    return 25 if exists(state, key, 0, 3) else 0
-            else:
-                return 5 if exists(state, key, 0, 2) else 0
-        else:
-            return 1
-    else:
-        if player(state, key, 0, 1) == otherPlayer:
-            if player(state, key, 0, 2) == otherPlayer:
-                if player(state, key, 0, 3) == otherPlayer:
-                    return -float('inf')
-                else:
-                    return -25 if exists(state, key, 0, 3) else 0
-            else:
-                return -5 if exists(state, key, 0, 2) else 0
-        else:
-            return -1
-    return 0
 
 
 def checkHorizontalConnection(state, key, problemPlayer, otherPlayer):
@@ -102,16 +77,71 @@ def heuristic(state, problemPlayer):
     heuristicValue = 0
     otherPlayer = "O" if problemPlayer == "X" else "X"
     for key in state.board:
-        heuristicValue += checkVerticalConnection(state, key, problemPlayer, otherPlayer)
-        if heuristicValue == -float('inf') or heuristicValue == float('inf'):
-            return heuristicValue
-        # heuristicsValue += checkHorizontalConnection(state, key, problemPlayer, otherPlayer)
-        if heuristicValue == -float('inf') or heuristicValue == float('inf'):
-            return heuristicValue
-        # heuristicsValue += checkDownwardDiagonal(state, key, problemPLayer, otherPlayer)
-        if heuristicValue == -float('inf') or heuristicValue == float('inf'):
-            return heuristicValue
-        # heuristicsValue += checkUpwardsDiagonal(state, key, problemPLayer, otherPlayer)
-        if heuristicValue == -float('inf') or heuristicValue == float('inf'):
-            return heuristicValue
+        heuristicValue += checkProblemVerticalTwoConnectionExistence(state, key, problemPlayer) if player(state, key) == problemPlayer else checkOtherVerticalTwoConnectionExistence(state, key, otherPlayer)
     return heuristicValue
+
+        #heuristicValue += checkVerticalConnection(state, key, problemPlayer, otherPlayer)
+        #if heuristicValue == -float('inf') or heuristicValue == float('inf'):
+            #return heuristicValue
+        # heuristicsValue += checkHorizontalConnection(state, key, problemPlayer, otherPlayer)
+        #if heuristicValue == -float('inf') or heuristicValue == float('inf'):
+            #return heuristicValue
+        # heuristicsValue += checkDownwardDiagonal(state, key, problemPLayer, otherPlayer)
+        #if heuristicValue == -float('inf') or heuristicValue == float('inf'):
+            #return heuristicValue
+        # heuristicsValue += checkUpwardsDiagonal(state, key, problemPLayer, otherPlayer)
+        #if heuristicValue == -float('inf') or heuristicValue == float('inf'):
+            #return heuristicValue
+
+
+def checkProblemVerticalTwoConnectionExistence(state, key, problemPlayer):
+    return 1 if exists(state, key, 0, 1) else checkProblemVerticalTwoConnection(key, problemPlayer, state)
+
+
+def checkProblemVerticalTwoConnection(key, problemPlayer, state):
+    return checkProblemVerticalThreeConnectionExistence(state, key, problemPlayer) if player(state, key, 0, 1) == problemPlayer else 0
+
+
+def checkProblemVerticalThreeConnectionExistence(state, key, problemPlayer):
+    return 5 if exists(state, key, 0, 2) else checkProblemVerticalThreeConnection(state, key, problemPlayer)
+
+
+def checkProblemVerticalThreeConnection(state, key, problemPlayer):
+    return checkProblemVerticalFourConnectionExistence(state, key, problemPlayer) if player(state, key, 0, 2) == problemPlayer else 0
+
+
+def checkProblemVerticalFourConnectionExistence(state, key, problemPlayer):
+    return 25 if exists(state, key, 0, 3) else checkProblemVerticalFourConnection(state, key, problemPlayer)
+
+
+def checkProblemVerticalFourConnection(state, key, problemPlayer):
+    return float('inf') if player(state, key, 0, 3) == problemPlayer else 0
+
+
+
+
+
+
+
+def checkOtherVerticalTwoConnectionExistence(state, key, otherPlayer):
+    return -1 if exists(state, key, 0, 1) else checkOtherVerticalTwoConnection(state, key, otherPlayer)
+
+
+def checkOtherVerticalTwoConnection(state, key, otherPlayer):
+    return checkOtherVerticalThreeConnectionExistence(state, key, otherPlayer) if player(state, key, 0, 1) == otherPlayer else 0
+
+
+def checkOtherVerticalThreeConnectionExistence(state, key, otherPlayer):
+    return -5 if exists(state, key, 0, 2) else checkOtherVerticalThreeConnection(state, key, otherPlayer)
+
+
+def checkOtherVerticalThreeConnection(state, key, otherPlayer):
+    return checkOtherVerticalFourConnectionExistence(state, key, otherPlayer) if player(state, key, 0, 2) == otherPlayer else 0
+
+
+def checkOtherVerticalFourConnectionExistence(state, key, otherPlayer):
+    return -25 if exists(state, key, 0, 3) else checkOtherVerticalFourConnection(state, key, otherPlayer)
+
+
+def checkOtherVerticalFourConnection(state, key, otherPlayer):
+    return -float('inf') if player(state, key, 0, 3) == otherPlayer else 0
