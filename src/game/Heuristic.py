@@ -1,3 +1,4 @@
+from game.heuristics.HorizontalHeuristic import HorizontalHeuristic
 from game.heuristics.VerticalHeuristic import VerticalHeuristic
 
 
@@ -90,7 +91,7 @@ def heuristic(state, problemPlayer):
         heuristicValue += VerticalHeuristic(state, problemPlayer, otherPlayer).heuristicIn(key)
         if heuristicValue == -float('inf') or heuristicValue == float('inf'):
             return heuristicValue
-        heuristicValue += checkProblemHorizontalTwoConnectionExistence(state, key, problemPlayer) if player(state, key) == problemPlayer else checkOtherHorizontalTwoConnectionExistence(state, key, otherPlayer)
+        heuristicValue += HorizontalHeuristic(state, problemPlayer, otherPlayer).heuristicIn(key)
 
     return heuristicValue
 
