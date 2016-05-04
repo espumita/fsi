@@ -46,6 +46,13 @@ class _HorizontalHeuristic(unittest.TestCase):
         self.state.moves.remove((5, 1))
         self.assertEqual(self.horizontalBoardHeuristic(), -9)
 
+    def test_when_whe_got_only_two_different_tokens(self):
+        self.state.board.setdefault((4, 1), 'X')
+        self.state.board.setdefault((5, 1), 'O')
+        self.state.moves.remove((4, 1))
+        self.state.moves.remove((5, 1))
+        self.assertEqual(self.horizontalBoardHeuristic(), 0)
+
     def test_when_whe_got_a_horizontal_connection_of_three_tokens_heuristic_should_be_39(self):
         self.state.board.setdefault((4, 1), 'X')
         self.state.board.setdefault((5, 1), 'X')
@@ -63,6 +70,43 @@ class _HorizontalHeuristic(unittest.TestCase):
         self.state.moves.remove((5, 1))
         self.state.moves.remove((6, 1))
         self.assertEqual(self.horizontalBoardHeuristic(), -39)
+
+    def test_when_you_get_blocked_from_the_right_in_a_two_horizontal_connection_heuristic_should_be_6(self):
+        self.state.board.setdefault((4, 1), 'X')
+        self.state.board.setdefault((5, 1), 'X')
+        self.state.board.setdefault((6, 1), 'O')
+        self.state.moves.remove((4, 1))
+        self.state.moves.remove((5, 1))
+        self.state.moves.remove((6, 1))
+        self.assertEqual(self.horizontalBoardHeuristic(), 6)
+
+    def test_when_you_get_blocked_from_the_left_in_a_two_horizontal_connection_heuristic_should_be_6(self):
+        self.state.board.setdefault((4, 1), 'O')
+        self.state.board.setdefault((5, 1), 'X')
+        self.state.board.setdefault((6, 1), 'X')
+        self.state.moves.remove((4, 1))
+        self.state.moves.remove((5, 1))
+        self.state.moves.remove((6, 1))
+        self.assertEqual(self.horizontalBoardHeuristic(), 6)
+
+    def test_when_you_block_from_the_right_in_a_two_horizontal_connection_heuristic_should_be_minus_6(self):
+        self.state.board.setdefault((4, 1), 'O')
+        self.state.board.setdefault((5, 1), 'O')
+        self.state.board.setdefault((6, 1), 'X')
+        self.state.moves.remove((4, 1))
+        self.state.moves.remove((5, 1))
+        self.state.moves.remove((6, 1))
+        self.assertEqual(self.horizontalBoardHeuristic(), -6)
+
+    def test_when_you_block_from_the_left_in_a_two_horizontal_connection_heuristic_should_be_minus_6(self):
+        self.state.board.setdefault((4, 1), 'X')
+        self.state.board.setdefault((5, 1), 'O')
+        self.state.board.setdefault((6, 1), 'O')
+        self.state.moves.remove((4, 1))
+        self.state.moves.remove((5, 1))
+        self.state.moves.remove((6, 1))
+        self.assertEqual(self.horizontalBoardHeuristic(), -6)
+
 
     def test_when_whe_got_a_horizontal_connection_of_four_tokens_heuristic_should_be_infinity(self):
         self.state.board.setdefault((4, 1), 'X')
@@ -85,57 +129,3 @@ class _HorizontalHeuristic(unittest.TestCase):
         self.state.moves.remove((6, 1))
         self.state.moves.remove((7, 1))
         self.assertEqual(self.horizontalBoardHeuristic(), -float('inf'))
-
-    def test_when_you_block_a_single_horizontal_connection_heuristic_should_be_1(self):
-        self.state.board.setdefault((4, 1), 'O')
-        self.state.board.setdefault((5, 1), 'X')
-        self.state.moves.remove((4, 1))
-        self.state.moves.remove((5, 1))
-        self.assertEqual(self.horizontalBoardHeuristic(), 1)
-
-    def test_when_you_get_blocked_in_a_single_horizontal_connection_heuristic_should_be_minus_1(self):
-        self.state.board.setdefault((4, 1), 'X')
-        self.state.board.setdefault((5, 1), 'O')
-        self.state.moves.remove((4, 1))
-        self.state.moves.remove((5, 1))
-        self.assertEqual(self.horizontalBoardHeuristic(), -1)
-
-    def test_when_you_block_a_two_horizontal_connection_heuristic_should_be_1(self):
-        self.state.board.setdefault((4, 1), 'O')
-        self.state.board.setdefault((5, 1), 'O')
-        self.state.board.setdefault((6, 1), 'X')
-        self.state.moves.remove((4, 1))
-        self.state.moves.remove((5, 1))
-        self.state.moves.remove((6, 1))
-        self.assertEqual(self.horizontalBoardHeuristic(), 1)
-
-    def test_when_you_get_blocked_in_a_two_horizontal_connection_heuristic_should_be_minus_1(self):
-        self.state.board.setdefault((4, 1), 'X')
-        self.state.board.setdefault((5, 1), 'X')
-        self.state.board.setdefault((6, 1), 'O')
-        self.state.moves.remove((4, 1))
-        self.state.moves.remove((5, 1))
-        self.state.moves.remove((6, 1))
-        self.assertEqual(self.horizontalBoardHeuristic(), -1)
-
-    def test_when_you_block_a_three_horizontal_connection_heuristic_should_be_1(self):
-        self.state.board.setdefault((3, 1), 'O')
-        self.state.board.setdefault((4, 1), 'O')
-        self.state.board.setdefault((5, 1), 'O')
-        self.state.board.setdefault((6, 1), 'X')
-        self.state.moves.remove((3, 1))
-        self.state.moves.remove((4, 1))
-        self.state.moves.remove((5, 1))
-        self.state.moves.remove((6, 1))
-        self.assertEqual(self.horizontalBoardHeuristic(), 1)
-
-    def test_when_you_get_blocked_in_a_three_horizontal_connection_heuristic_should_be_minus_1(self):
-        self.state.board.setdefault((3, 1), 'X')
-        self.state.board.setdefault((4, 1), 'X')
-        self.state.board.setdefault((5, 1), 'X')
-        self.state.board.setdefault((6, 1), 'O')
-        self.state.moves.remove((3, 1))
-        self.state.moves.remove((4, 1))
-        self.state.moves.remove((5, 1))
-        self.state.moves.remove((6, 1))
-        self.assertEqual(self.horizontalBoardHeuristic(), -1)

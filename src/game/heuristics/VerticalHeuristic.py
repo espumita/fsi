@@ -3,53 +3,39 @@ class VerticalHeuristic:
     def __init__(self, state, problemPlayer, otherPlayer):
         self.state = state
         self.problemPlayer = problemPlayer
-        self.otherPlayer =otherPlayer
+        self.otherPlayer = otherPlayer
 
     def player(self, key, OffsetX=0, OffsetY=0):
         return self.state.board.get((key[0] + OffsetX, key[1] + OffsetY))
 
-    def exists(self, key, OffsetX=0, OffsetY=0):
+    def isEmpty(self, key, OffsetX=0, OffsetY=0):
         return (key[0] + OffsetX, key[1] + OffsetY) in self.state.moves
 
-    def heuristicIn(self, key):
-        return self.checkProblemVerticalTwoConnectionExistence(key) if self.player(key) == self.problemPlayer else self.checkOtherVerticalTwoConnectionExistence(key)
+    def heuristicIn(self):
+        value = 0
+        for column in (1, 8):
+            result = 0
+            for line in (1, 7):
+                if self.player((column, line)) == "X":
+                    if self.isEmpty((column, line), 0, 1):
+                        result += 10
+                    else:
+                        if self.player((column, line), 0, 1) == "X":
+                            result += 250
+                            if result >= 750:
+                                return float('inf')
+                        else:
+                            result = 0
 
-    #Vertical problem
-
-    def checkProblemVerticalTwoConnectionExistence(self, key):
-        return 1 if self.exists(key, 0, 1) else self.checkProblemVerticalTwoConnection(key)
-
-    def checkProblemVerticalTwoConnection(self, key):
-        return self.checkProblemVerticalThreeConnectionExistence(key) if self.player(key, 0, 1) == self.problemPlayer else 0
-
-    def checkProblemVerticalThreeConnectionExistence(self, key):
-        return 5 if self.exists(key, 0, 2) else self.checkProblemVerticalThreeConnection(key)
-
-    def checkProblemVerticalThreeConnection(self, key):
-        return self.checkProblemVerticalFourConnectionExistence(key) if self.player(key, 0, 2) == self.problemPlayer else 0
-
-    def checkProblemVerticalFourConnectionExistence(self, key):
-        return 25 if self.exists(key, 0, 3) else self.checkProblemVerticalFourConnection(key)
-
-    def checkProblemVerticalFourConnection(self, key):
-        return float('inf') if self.player(key, 0, 3) == self.problemPlayer else 0
-
-    #Vertical other
-    
-    def checkOtherVerticalTwoConnectionExistence(self, key):
-        return -1 if self.exists(key, 0, 1) else self.checkOtherVerticalTwoConnection(key)
-
-    def checkOtherVerticalTwoConnection(self, key):
-        return self.checkOtherVerticalThreeConnectionExistence(key) if self.player(key, 0, 1) == self.otherPlayer else 0
-
-    def checkOtherVerticalThreeConnectionExistence(self, key):
-        return -5 if self.exists(key, 0, 2) else self.checkOtherVerticalThreeConnection(key)
-
-    def checkOtherVerticalThreeConnection(self, key):
-        return self.checkOtherVerticalFourConnectionExistence(key) if self.player(key, 0, 2) == self.otherPlayer else 0
-
-    def checkOtherVerticalFourConnectionExistence(self, key):
-        return -25 if self.exists(key, 0, 3) else self.checkOtherVerticalFourConnection(key)
-
-    def checkOtherVerticalFourConnection(self, key):
-        return -float('inf') if self.player(key, 0, 3) == self.otherPlayer else 0
+                if self.player((column, line)) == "O":
+                    if self.isEmpty((column, line), 0, 1):
+                        result -= 10
+                    else:
+                        if self.player((column, line), 0, 1) == "O":
+                            result -= 250
+                            if result <= -750:
+                                return -float('inf')
+                        else:
+                            result = 0
+            value += result
+        return value

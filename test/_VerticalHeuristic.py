@@ -11,14 +11,6 @@ class _VerticalHeuristic(unittest.TestCase):
         cls.problemPlayer = 'X'
         cls.otherPlayer = 'O'
 
-    def verticalBoardHeuristic(self):
-        heuristicValue = 0
-        for key in self.state.board:
-            heuristicValue += VerticalHeuristic(self.state, self.problemPlayer, self.otherPlayer).heuristicIn(key)
-            if heuristicValue == -float('inf') or heuristicValue == float('inf'):
-                return heuristicValue
-        return heuristicValue
-
     def test_when_whe_got_empty_board_heuristic_should_be_0(self):
         self.assertEqual(self.verticalBoardHeuristic(), 0)
 
@@ -139,3 +131,18 @@ class _VerticalHeuristic(unittest.TestCase):
         self.state.moves.remove((4, 3))
         self.state.moves.remove((4, 4))
         self.assertEqual(self.verticalBoardHeuristic(), -1)
+
+    def verticalBoardHeuristic(self):
+        heuristicValue = 0
+        for key in self.state.board:
+            heuristicValue += VerticalHeuristic(self.state, self.problemPlayer, self.otherPlayer).heuristicIn(key)
+            if heuristicValue == -float('inf') or heuristicValue == float('inf'):
+                return heuristicValue
+        return heuristicValue
+
+
+
+
+
+
+
