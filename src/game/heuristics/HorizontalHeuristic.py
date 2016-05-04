@@ -11,10 +11,103 @@ class HorizontalHeuristic:
             line_value = 0
             for column in range(1, 8):
                 if not self.is_empty((column, line)):
-                    if self.player((column, line)) == self.other_player:
-                        return 0
+                    if self.player((column, line)) == self.problem_player:
+                        if self.player((column, line), -1) == self.problem_player:
+                            pass
+                        else:
+                            offset = 1
+                            while self.player((column, line), offset) == self.problem_player:
+                                offset += 1
+                            if offset >= 4:
+                                return float('inf')
+                            if offset == 3:
+                                if self.is_empty((column, line), offset):
+                                    if self.is_empty((column, line), -1):
+                                        line_value = 590
+                                    else:
+                                        if self.player((column, line), -1) == self.other_player:
+                                            line_value = 500
+                                else:
+                                    if self.player((column, line), offset) == self.other_player:
+                                        if self.is_empty((column, line), -1):
+                                            line_value = 500
+                                        else:
+                                            line_value = 0
+                            if offset == 2:
+                                if self.is_empty((column, line), offset):
+                                    if self.is_empty((column, line), -1):
+                                        line_value = 340
+                                    else:
+                                        if self.player((column, line), -1) == self.other_player:
+                                            line_value = 300
+                                else:
+                                    if self.player((column, line), offset) == self.other_player:
+                                        if self.is_empty((column, line), -1):
+                                            line_value = 300
+                                        else:
+                                            line_value = 0
+                            if offset == 1:
+                                if self.is_empty((column, line), offset):
+                                    if self.is_empty((column, line), -1):
+                                        line_value = 40
+                                    else:
+                                        if self.player((column, line), -1) == self.other_player:
+                                            line_value = 20
+                                else:
+                                    if self.player((column, line), offset) == self.other_player:
+                                        if self.is_empty((column, line), -1):
+                                            line_value = 20
+                                        else:
+                                            line_value = 0
                     else:
-                        return 0
+                        if self.player((column, line), -1) == self.other_player:
+                            pass
+                        else:
+                            offset = 1
+                            while self.player((column, line), offset) == self.other_player:
+                                offset += 1
+                            if offset >= 4:
+                                return -float('inf')
+                            if offset == 3:
+                                if self.is_empty((column, line), offset):
+                                    if self.is_empty((column, line), -1):
+                                        line_value = -590
+                                    else:
+                                        if self.player((column, line), -1) == self.problem_player:
+                                            line_value = -500
+                                else:
+                                    if self.player((column, line), offset) == self.problem_player:
+                                        if self.is_empty((column, line), -1):
+                                            line_value = -500
+                                        else:
+                                            line_value = 0
+                            if offset == 2:
+                                if self.is_empty((column, line), offset):
+                                    if self.is_empty((column, line), -1):
+                                        line_value = -340
+                                    else:
+                                        if self.player((column, line), -1) == self.problem_player:
+                                            line_value = -300
+                                else:
+                                    if self.player((column, line), offset) == self.problem_player:
+                                        if self.is_empty((column, line), -1):
+                                            line_value = -300
+                                        else:
+                                            line_value = 0
+                            if offset == 1:
+                                if self.is_empty((column, line), offset):
+                                    if self.is_empty((column, line), -1):
+                                        line_value = -40
+                                    else:
+                                        if self.player((column, line), -1) == self.problem_player:
+                                            line_value = -20
+                                else:
+                                    if self.player((column, line), offset) == self.problem_player:
+                                        if self.is_empty((column, line), -1):
+                                            line_value = -20
+                                        else:
+                                            line_value = 0
+
             total_value += line_value
         return total_value
 

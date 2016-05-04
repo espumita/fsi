@@ -21,7 +21,7 @@ class VerticalHeuristic:
                             if column_value >= 700:
                                 return float('inf')
                         else:
-                            column_value = 1
+                            column_value = 0
                 else:
                     if self.player((column, line)) == self.other_player:
                         if self.is_empty((column, line), 0, 1):
