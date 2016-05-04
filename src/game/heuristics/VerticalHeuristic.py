@@ -11,31 +11,33 @@ class VerticalHeuristic:
     def isEmpty(self, key, OffsetX=0, OffsetY=0):
         return (key[0] + OffsetX, key[1] + OffsetY) in self.state.moves
 
-    def heuristicIn(self):
-        value = 0
-        for column in (1, 8):
-            result = 0
-            for line in (1, 7):
+    def heuristic(self):
+        totalValue = 0
+        for column in range(1, 8):
+            columnValue = 0
+            for line in range(1, 7):
+                if self.isEmpty((column, line)):
+                    break
                 if self.player((column, line)) == "X":
                     if self.isEmpty((column, line), 0, 1):
-                        result += 10
+                        columnValue += 10
                     else:
                         if self.player((column, line), 0, 1) == "X":
-                            result += 250
-                            if result >= 750:
+                            columnValue += 240
+                            if columnValue >= 700:
                                 return float('inf')
                         else:
-                            result = 0
-
-                if self.player((column, line)) == "O":
-                    if self.isEmpty((column, line), 0, 1):
-                        result -= 10
-                    else:
-                        if self.player((column, line), 0, 1) == "O":
-                            result -= 250
-                            if result <= -750:
-                                return -float('inf')
+                            columnValue = 1
+                else:
+                    if self.player((column, line)) == "O":
+                        if self.isEmpty((column, line), 0, 1):
+                            columnValue -= 10
                         else:
-                            result = 0
-            value += result
-        return value
+                            if self.player((column, line), 0, 1) == "O":
+                                columnValue -= 240
+                                if columnValue <= -700:
+                                    return -float('inf')
+                            else:
+                                columnValue = 0
+            totalValue += columnValue
+        return totalValue

@@ -57,7 +57,7 @@ def checkDownwardDiagonal(state, key, problemPlayer, otherPlayer):
 def heuristic(state, problemPlayer):
     heuristicValue = 0
     otherPlayer = "O" if problemPlayer == "X" else "X"
-    heuristicValue += VerticalHeuristic(state, problemPlayer, otherPlayer).heuristicIn()
+    heuristicValue += VerticalHeuristic(state, problemPlayer, otherPlayer).heuristic()
     if heuristicValue == -float('inf') or heuristicValue == float('inf'):
         return heuristicValue
    # heuristicValue += HorizontalHeuristic(state, problemPlayer, otherPlayer).heuristicIn()
