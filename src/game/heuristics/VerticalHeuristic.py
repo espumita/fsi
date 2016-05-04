@@ -1,43 +1,43 @@
 class VerticalHeuristic:
 
-    def __init__(self, state, problemPlayer, otherPlayer):
+    def __init__(self, state, problem_player, other_player):
         self.state = state
-        self.problemPlayer = problemPlayer
-        self.otherPlayer = otherPlayer
+        self.problem_player = problem_player
+        self.other_player = other_player
 
-    def player(self, key, OffsetX=0, OffsetY=0):
-        return self.state.board.get((key[0] + OffsetX, key[1] + OffsetY))
+    def player(self, key, offset_x=0, offset_y=0):
+        return self.state.board.get((key[0] + offset_x, key[1] + offset_y))
 
-    def isEmpty(self, key, OffsetX=0, OffsetY=0):
-        return (key[0] + OffsetX, key[1] + OffsetY) in self.state.moves
+    def is_empty(self, key, offset_x=0, offset_y=0):
+        return (key[0] + offset_x, key[1] + offset_y) in self.state.moves
 
     def heuristic(self):
-        totalValue = 0
+        total_value = 0
         for column in range(1, 8):
-            columnValue = 0
+            column_value = 0
             for line in range(1, 7):
-                if self.isEmpty((column, line)):
+                if self.is_empty((column, line)):
                     break
-                if self.player((column, line)) == "X":
-                    if self.isEmpty((column, line), 0, 1):
-                        columnValue += 10
+                if self.player((column, line)) == self.problem_player:
+                    if self.is_empty((column, line), 0, 1):
+                        column_value += 10
                     else:
-                        if self.player((column, line), 0, 1) == "X":
-                            columnValue += 240
-                            if columnValue >= 700:
+                        if self.player((column, line), 0, 1) == self.problem_player:
+                            column_value += 240
+                            if column_value >= 700:
                                 return float('inf')
                         else:
-                            columnValue = 1
+                            column_value = 1
                 else:
-                    if self.player((column, line)) == "O":
-                        if self.isEmpty((column, line), 0, 1):
-                            columnValue -= 10
+                    if self.player((column, line)) == self.other_player:
+                        if self.is_empty((column, line), 0, 1):
+                            column_value -= 10
                         else:
-                            if self.player((column, line), 0, 1) == "O":
-                                columnValue -= 240
-                                if columnValue <= -700:
+                            if self.player((column, line), 0, 1) == self.other_player:
+                                column_value -= 240
+                                if column_value <= -700:
                                     return -float('inf')
                             else:
-                                columnValue = 0
-            totalValue += columnValue
-        return totalValue
+                                column_value = 0
+            total_value += column_value
+        return total_value

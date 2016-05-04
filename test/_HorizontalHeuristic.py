@@ -14,7 +14,7 @@ class _HorizontalHeuristic(unittest.TestCase):
     def horizontalBoardHeuristic(self):
         heuristicValue = 0
         for key in self.state.board:
-            heuristicValue += HorizontalHeuristic(self.state, self.problemPlayer, self.otherPlayer).heuristicIn(key)
+            heuristicValue += HorizontalHeuristic(self.state, self.problemPlayer, self.otherPlayer).heuristic(key)
             if heuristicValue == -float('inf') or heuristicValue == float('inf'):
                 return heuristicValue
         return heuristicValue
