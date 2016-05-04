@@ -5,12 +5,6 @@ class VerticalHeuristic:
         self.problem_player = problem_player
         self.other_player = other_player
 
-    def player(self, key, offset_x=0, offset_y=0):
-        return self.state.board.get((key[0] + offset_x, key[1] + offset_y))
-
-    def is_empty(self, key, offset_x=0, offset_y=0):
-        return (key[0] + offset_x, key[1] + offset_y) in self.state.moves
-
     def heuristic(self):
         total_value = 0
         for column in range(1, 8):
@@ -41,3 +35,9 @@ class VerticalHeuristic:
                                 column_value = 0
             total_value += column_value
         return total_value
+
+    def player(self, key, offset_x=0, offset_y=0):
+        return self.state.board.get((key[0] + offset_x, key[1] + offset_y))
+
+    def is_empty(self, key, offset_x=0, offset_y=0):
+        return (key[0] + offset_x, key[1] + offset_y) in self.state.moves
