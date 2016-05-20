@@ -4,6 +4,7 @@ class HorizontalHeuristic:
         self.state = state
         self.problem_player = problem_player
         self.other_player = other_player
+        self.values = [40, 400, 800]
 
     def heuristic(self):
         total_value = 0
@@ -12,108 +13,41 @@ class HorizontalHeuristic:
             for column in range(1, 8):
                 if not self.is_empty((column, line)):
                     if self.player((column, line)) == self.problem_player:
-                        if self.player((column, line), -1) == self.problem_player:
-                            pass
-                        else:
-                            offset = 1
-                            while self.player((column, line), offset) == self.problem_player:
-                                offset += 1
-                            if offset >= 4:
+                        if not self.player((column, line), -1) == self.problem_player:
+                            occurrences = self.occurrences_off(self.problem_player, column, line)
+                            if occurrences >= 4:
                                 return float('inf')
-                            if offset == 3:
-                                if self.is_empty((column, line), offset):
-                                    if self.is_empty((column, line), -1):
-                                        line_value = 590
-                                    else:
-                                        if self.player((column, line), -1) == self.other_player:
-                                            line_value = 500
-                                else:
-                                    if self.player((column, line), offset) == self.other_player:
-                                        if self.is_empty((column, line), -1):
-                                            line_value = 500
-                                        else:
-                                            line_value = 0
-                            if offset == 2:
-                                if self.is_empty((column, line), offset):
-                                    if self.is_empty((column, line), -1):
-                                        line_value = 340
-                                    else:
-                                        if self.player((column, line), -1) == self.other_player:
-                                            line_value = 300
-                                else:
-                                    if self.player((column, line), offset) == self.other_player:
-                                        if self.is_empty((column, line), -1):
-                                            line_value = 300
-                                        else:
-                                            line_value = 0
-                            if offset == 1:
-                                if self.is_empty((column, line), offset):
-                                    if self.is_empty((column, line), -1):
-                                        line_value = 40
-                                    else:
-                                        if self.player((column, line), -1) == self.other_player:
-                                            line_value = 20
-                                else:
-                                    if self.player((column, line), offset) == self.other_player:
-                                        if self.is_empty((column, line), -1):
-                                            line_value = 20
-                                        else:
-                                            line_value = 0
+                            line_value += self.connection_breaks(column, line, occurrences)
                     else:
-                        if self.player((column, line), -1) == self.other_player:
-                            pass
-                        else:
-                            offset = 1
-                            while self.player((column, line), offset) == self.other_player:
-                                offset += 1
-                            if offset >= 4:
+                        if not self.player((column, line), -1) == self.other_player:
+                            occurrences = self.occurrences_off(self.other_player, column, line)
+                            if occurrences >= 4:
                                 return -float('inf')
-                            if offset == 3:
-                                if self.is_empty((column, line), offset):
-                                    if self.is_empty((column, line), -1):
-                                        line_value = -590
-                                    else:
-                                        if self.player((column, line), -1) == self.problem_player:
-                                            line_value = -500
-                                else:
-                                    if self.player((column, line), offset) == self.problem_player:
-                                        if self.is_empty((column, line), -1):
-                                            line_value = -500
-                                        else:
-                                            line_value = 0
-                            if offset == 2:
-                                if self.is_empty((column, line), offset):
-                                    if self.is_empty((column, line), -1):
-                                        line_value = -340
-                                    else:
-                                        if self.player((column, line), -1) == self.problem_player:
-                                            line_value = -300
-                                else:
-                                    if self.player((column, line), offset) == self.problem_player:
-                                        if self.is_empty((column, line), -1):
-                                            line_value = -300
-                                        else:
-                                            line_value = 0
-                            if offset == 1:
-                                if self.is_empty((column, line), offset):
-                                    if self.is_empty((column, line), -1):
-                                        line_value = -40
-                                    else:
-                                        if self.player((column, line), -1) == self.problem_player:
-                                            line_value = -20
-                                else:
-                                    if self.player((column, line), offset) == self.problem_player:
-                                        if self.is_empty((column, line), -1):
-                                            line_value = -20
-                                        else:
-                                            line_value = 0
-
+                            line_value -= self.connection_breaks(column, line, occurrences)
             total_value += line_value
         return total_value
+
+    def connection_breaks(self, column, line, occurrences):
+        if self.is_empty((column, line), -1):
+            if self.is_empty((column, line), occurrences):
+                return self.values[occurrences - 1]
+            else:
+                return self.values[occurrences - 1]/2
+        else:
+            if self.is_empty((column, line), occurrences):
+                return self.values[occurrences - 1]/2
+        return 0
+
+    def occurrences_off(self, player, column, line):
+        occurrences = 1
+        while self.player((column, line), occurrences) == player:
+            occurrences += 1
+        return occurrences
 
     def player(self, key, offset_x=0, offset_y=0):
         return self.state.board.get((key[0] + offset_x, key[1] + offset_y))
 
     def is_empty(self, key, offset_x=0, offset_y=0):
         return (key[0] + offset_x, key[1] + offset_y) in self.state.moves
+
 

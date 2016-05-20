@@ -15,7 +15,9 @@ class _VerticalHeuristic(unittest.TestCase):
         self.assertEqual(self.vertical_heuristic(), 0)
 
     def test_when_whe_got_a_single_token_in_the_board_heuristic_should_be_10(self):
-        self.add_tokens({(4, 1): 'X'})
+        self.add_tokens({
+            (4, 1): 'X'
+        })
 
         self.assertEqual(self.vertical_heuristic(), 10)
 
