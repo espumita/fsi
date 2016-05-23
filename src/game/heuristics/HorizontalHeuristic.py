@@ -10,8 +10,10 @@ class HorizontalHeuristic:
         total_value = 0
         for line in range(1, 7):
             line_value = 0
+            line_clean = True
             for column in range(1, 8):
                 if not self.is_empty((column, line)):
+                    line_clean = False
                     if self.player((column, line)) == self.problem_player:
                         if not self.player((column, line), -1) == self.problem_player:
                             occurrences = self.occurrences_off(self.problem_player, column, line)
@@ -25,6 +27,8 @@ class HorizontalHeuristic:
                                 return -float('inf')
                             line_value -= self.connection_breaks(column, line, occurrences)
             total_value += line_value
+            if line_clean:
+                break
         return total_value
 
     def connection_breaks(self, column, line, occurrences):

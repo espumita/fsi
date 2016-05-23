@@ -27,35 +27,35 @@ class _VerticalHeuristic(unittest.TestCase):
         })
         self.assertEqual(self.vertical_heuristic(), -10)
 
-    def test_when_whe_got_a_vertical_connection_of_two_tokens_heuristic_should_be_250(self):
+    def test_when_whe_got_a_vertical_connection_of_two_tokens_heuristic_should_be_120(self):
         self.add_tokens({
             (4, 1): 'X',
             (4, 2): 'X'
         })
-        self.assertEqual(self.vertical_heuristic(), 250)
+        self.assertEqual(self.vertical_heuristic(), 120)
 
-    def test_when_whe_got_a_vertical_connection_of_two_enemy_tokens_heuristic_should_be_minus_250(self):
+    def test_when_whe_got_a_vertical_connection_of_two_enemy_tokens_heuristic_should_be_minus_120(self):
         self.add_tokens({
             (4, 1): 'O',
             (4, 2): 'O'
         })
-        self.assertEqual(self.vertical_heuristic(), -250)
+        self.assertEqual(self.vertical_heuristic(), -120)
 
-    def test_when_whe_got_a_vertical_connection_of_three_tokens_heuristic_should_be_490(self):
+    def test_when_whe_got_a_vertical_connection_of_three_tokens_heuristic_should_be_350(self):
         self.add_tokens({
             (4, 1): 'X',
             (4, 2): 'X',
             (4, 3): 'X'
         })
-        self.assertEqual(self.vertical_heuristic(), 490)
+        self.assertEqual(self.vertical_heuristic(), 350)
 
-    def test_when_whe_got_a_vertical_connection_of_three_enemy_tokens_heuristic_should_be_minus_490(self):
+    def test_when_whe_got_a_vertical_connection_of_three_enemy_tokens_heuristic_should_be_minus_350(self):
         self.add_tokens({
             (4, 1): 'O',
             (4, 2): 'O',
             (4, 3): 'O'
         })
-        self.assertEqual(self.vertical_heuristic(), -490)
+        self.assertEqual(self.vertical_heuristic(), -350)
 
     def test_when_whe_got_a_vertical_connection_of_four_tokens_heuristic_should_be_infinity(self):
         self.add_tokens({
