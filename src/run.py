@@ -1,6 +1,7 @@
 from game import games
 from game.ConnectFour import ConnectFour
 from game.Heuristic import heuristic
+
 diff = {
     1: 2,
     2: 3,

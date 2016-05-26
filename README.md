@@ -11,26 +11,28 @@ Descartando las casillas vacías, buscando el numero de ocurrencias de "X" o "O"
 los laterales de dicha ocurrencia (connection_breaks()), para asignar un valor a cada caso posible y para cada
 valor de la ocurrencia.
 
-Los valores de la heuristica, tomando X como jugador problema, para cada escaneo solo de las X serían:
-
-|       | Vertical | Horizontal | Diagonales |
-|:-----:|:--------:|:----------:|:----------:|
-|     X |    20    |     40     |     50     |
-|    XO |    10    |     20     |     25     |
-|    OX |     0    |     20     |     25     |
-|   OXO |     0    |      0     |      0     |
-|    XX |    240   |     400    |     500    |
-|   XXO |    120   |     200    |     250    |
-|   OXX |     0    |     200    |     250    |
-|  OXXO |     0    |      0     |      0     |
-|   XXX |    700   |     800    |     900    |
-|  XXXO |    350   |     400    |     450    |
-|  OXXX |     0    |     400    |     450    |
-| OXXXO |     0    |      0     |      0     |
+Los valores de la heuristica, tomando X como jugador problema y O como el otro jugador:
 
 
-Siendo los del otro jugador los mismos pero de forma negativa.
+|       | Vertical | Horizontal | Diagonales | |       | Vertical | Horizontal | Diagonales |
+|:-----:|:--------:|:----------:|:----------:| |:-----:|:--------:|:----------:|:----------:|
+|     X |    20    |     40     |     50     | |     O |    -20   |     -40    |     -50    |
+|    XO |    10    |     20     |     25     | |    OX |    -10   |     -20    |     -25    |
+|    OX |     0    |     20     |     25     | |    XO |     0    |     -20    |     -25    |
+|   OXO |     0    |      0     |      0     | |   XOX |     0    |      0     |      0     |
+|    XX |    240   |     400    |     500    | |    OO |   -240   |    -400    |    -500    |
+|   XXO |    120   |     200    |     250    | |   OOX |   -120   |    -200    |    -250    |
+|   OXX |     0    |     200    |     250    | |   XOO |     0    |    -200    |    -250    |
+|  OXXO |     0    |      0     |      0     | |  XOOX |     0    |      0     |      0     |
+|   XXX |    700   |     800    |     900    | |   OOO |   -700   |    -800    |    -900    |
+|  XXXO |    350   |     400    |     450    | |  OOOX |   -350   |    -400    |    -450    |
+|  OXXX |     0    |     400    |     450    | |  XOOO |     0    |    -400    |    -450    |
+| OXXXO |     0    |      0     |      0     | | XOOOX |     0    |      0     |      0     |
+|  XXXX |    inf   |     inf    |     inf    | |  OOOO |   -inf   |    -inf    |    -inf    |
 
+
+
+##Tests
 
 En el directorio /test se encuentran las clases de test unitarios para cada clase, que representan un buen numero
 de posibles estados y valores.
@@ -47,7 +49,7 @@ Seleccionables al iniciar el juego.
 
 ##Jugador inicial
 
-Se ha rediseñado el concepto de player para poder empezar como "O" nosotros y no como "X".
+Se ha rediseñado el concepto de player para poder empezar como "O" nosotros cambiando solo una variable.
 
 
 ##Memoization
