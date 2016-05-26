@@ -70,6 +70,6 @@ Se ha rediseñado el concepto de player para poder empezar como "O" nosotros cam
 
 ##Memoization
 
-Se ha utilizado la técnica de optimización memoization para mejorar el rendimiento de la heuriscitca, que
+Se ha utilizado la técnica de optimización [memoization](https://en.wikipedia.org/wiki/Memoization) para mejorar el rendimiento de la heuriscitca, que
 consiste en guardar en un diccionario la clave y valor de la heuristica para cada estado, de esta forma,
 aprovechar las heuristicas ya calculadas para estados iguales.
