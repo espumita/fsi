@@ -57,9 +57,9 @@ de posibles estados y valores.
 
 Se ha añadido 3 niveles de dificultad:
 
-* Nivel fácil, profundidad de la busqueda es = 2;
-* Nivel normal, profundidad de la busqueda es = 3;
-* Nivel difícil, profundidad de la busqueda es = 4;
+* Nivel fácil, profundidad de la busqueda es = 2
+* Nivel normal, profundidad de la busqueda es = 3
+* Nivel difícil, profundidad de la busqueda es = 4
 
 Seleccionables al iniciar el juego.
 
