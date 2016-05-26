@@ -14,22 +14,38 @@ valor de la ocurrencia.
 Los valores de la heuristica, tomando X como jugador problema y O como el otro jugador:
 
 
-|       | Vertical | Horizontal | Diagonales | |       | Vertical | Horizontal | Diagonales |
-|:-----:|:--------:|:----------:|:----------:| |:-----:|:--------:|:----------:|:----------:|
-|     X |    20    |     40     |     50     | |     O |    -20   |     -40    |     -50    |
-|    XO |    10    |     20     |     25     | |    OX |    -10   |     -20    |     -25    |
-|    OX |     0    |     20     |     25     | |    XO |     0    |     -20    |     -25    |
-|   OXO |     0    |      0     |      0     | |   XOX |     0    |      0     |      0     |
-|    XX |    240   |     400    |     500    | |    OO |   -240   |    -400    |    -500    |
-|   XXO |    120   |     200    |     250    | |   OOX |   -120   |    -200    |    -250    |
-|   OXX |     0    |     200    |     250    | |   XOO |     0    |    -200    |    -250    |
-|  OXXO |     0    |      0     |      0     | |  XOOX |     0    |      0     |      0     |
-|   XXX |    700   |     800    |     900    | |   OOO |   -700   |    -800    |    -900    |
-|  XXXO |    350   |     400    |     450    | |  OOOX |   -350   |    -400    |    -450    |
-|  OXXX |     0    |     400    |     450    | |  XOOO |     0    |    -400    |    -450    |
-| OXXXO |     0    |      0     |      0     | | XOOOX |     0    |      0     |      0     |
-|  XXXX |    inf   |     inf    |     inf    | |  OOOO |   -inf   |    -inf    |    -inf    |
+|       | Vertical | Horizontal | Diagonales |
+|:-----:|:--------:|:----------:|:----------:|
+|     X |    20    |     40     |     50     |
+|    XO |    10    |     20     |     25     |
+|    OX |     0    |     20     |     25     |
+|   OXO |     0    |      0     |      0     |
+|    XX |    240   |     400    |     500    |
+|   XXO |    120   |     200    |     250    |
+|   OXX |     0    |     200    |     250    |
+|  OXXO |     0    |      0     |      0     |
+|   XXX |    700   |     800    |     900    |
+|  XXXO |    350   |     400    |     450    |
+|  OXXX |     0    |     400    |     450    |
+| OXXXO |     0    |      0     |      0     |
+|  XXXX |    inf   |     inf    |     inf    |
 
+
+|       | Vertical | Horizontal | Diagonales |
+|:-----:|:--------:|:----------:|:----------:|
+|     O |    -20   |     -40    |     -50    |
+|    OX |    -10   |     -20    |     -25    |
+|    XO |     0    |     -20    |     -25    |
+|   XOX |     0    |      0     |      0     |
+|    OO |   -240   |    -400    |    -500    |
+|   OOX |   -120   |    -200    |    -250    |
+|   XOO |     0    |    -200    |    -250    |
+|  XOOX |     0    |      0     |      0     |
+|   OOO |   -700   |    -800    |    -900    |
+|  OOOX |   -350   |    -400    |    -450    |
+|  XOOO |     0    |    -400    |    -450    |
+| XOOOX |     0    |      0     |      0     |
+|  OOOO |   -inf   |    -inf    |    -inf    |
 
 
 ##Tests
