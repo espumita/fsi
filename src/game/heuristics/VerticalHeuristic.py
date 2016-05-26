@@ -29,14 +29,8 @@ class VerticalHeuristic:
         return total_value
 
     def connection_breaks(self, column, line, occurrences):
-        if self.is_empty((column, line), 0, -1):
-            if self.is_empty((column, line), 0, occurrences):
-                return self.values[occurrences - 1]
-            else:
-                return self.values[occurrences - 1]/2
-        else:
-            if self.is_empty((column, line), 0, occurrences):
-                return self.values[occurrences - 1]/2
+        if self.is_empty((column, line), 0, occurrences):
+            return self.values[occurrences - 1]/2
         return 0
 
     def occurrences_off(self, player, column, line):

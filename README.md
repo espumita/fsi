@@ -1,24 +1,35 @@
-##La heuristica
+##La heurística
 
 Para realizar la implementación de la heurística hemos creado las clases
 VerticalHeuristic, HorizontalHeuristic, UpwardHeuristic,
 DownwardHeuristic.
 
-Estas clases representan un escaneo completo del tablero para el estado acutal.
+Estas clases representan un escaneo completo del tablero para el estado actual.
 
-Básicamente el escaneo consiste en mirar por columnas, (vertical y diagonales) o filas, (horizontal).
+Básicamente el escaneo consiste en mirar por columnas, (vertical y diagonales) o por filas, (horizontal).
 Descartando las casillas vacías, buscando el numero de ocurrencias de "X" o "O" (ocurrences_of()), y comprobando
 los laterales de dicha ocurrencia (connection_breaks()), para asignar un valor a cada caso posible y para cada
 valor de la ocurrencia.
 
-Ej: para ocurrencia = 3 , los valores para los escaneos de las X serían:
+Los valores de la heuristica, tomando X como jugador problema, para cada escaneo solo de las X serían:
 
 |       | Vertical | Horizontal | Diagonales |
 |:-----:|:--------:|:----------:|:----------:|
+|     X |    20    |     40     |     50     |
+|    XO |    10    |     20     |     25     |
+|    OX |     0    |     20     |     25     |
+|   OXO |     0    |      0     |      0     |
+|    XX |    240   |     400    |     500    |
+|   XXO |    120   |     200    |     250    |
+|   OXX |     0    |     200    |     250    |
+|  OXXO |     0    |      0     |      0     |
 |   XXX |    700   |     800    |     900    |
 |  XXXO |    350   |     400    |     450    |
 |  OXXX |     0    |     400    |     450    |
 | OXXXO |     0    |      0     |      0     |
+
+
+Siendo los del otro jugador los mismos pero de forma negativa.
 
 
 En el directorio /test se encuentran las clases de test unitarios para cada clase, que representan un buen numero
@@ -28,9 +39,9 @@ de posibles estados y valores.
 
 Se ha añadido 3 niveles de dificultad:
 
-* Nivel fácil, profundidad dela busqueda es = 2;
-* Nivel normal, profundidad dela busqueda es = 3;
-* Nivel difícil, profundidad dela busqueda es = 4;
+* Nivel fácil, profundidad de la busqueda es = 2;
+* Nivel normal, profundidad de la busqueda es = 3;
+* Nivel difícil, profundidad de la busqueda es = 4;
 
 Seleccionables al iniciar el juego.
 
